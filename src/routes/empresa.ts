@@ -21,7 +21,10 @@ router.post('', (req, res) => {
     }
 });
 
-router.delete('/:nombre',  (req, res) => {
+/*
+    -- Metodo con nombre en la url
+
+    router.delete('/:nombre',  (req?, res?) => {
     const { nombre } = req.params;
     const result = empresaService.deleteEmpresa(nombre);
     if (result) {
@@ -30,6 +33,20 @@ router.delete('/:nombre',  (req, res) => {
         res.status(400).send({ message: "Empresa no existente" });
     }
 });
+ */
+
+// -- Metodo con query params
+router.delete('/borrar',  (req?, res?) => {
+    const nombre : any = req.query.nombre;
+    const result = empresaService.deleteEmpresa(nombre);
+    if (result) {
+        res.send({ message: "Empresa eliminada correctamente" });
+    } else {
+        res.status(400).send({ message: "Empresa no existente" });
+    }
+});
+
+
 
 router.delete('/:nombre/eliminarSiNoTienePersonas', (req, res) => {
     const { nombre } = req.params;
@@ -41,6 +58,7 @@ router.delete('/:nombre/eliminarSiNoTienePersonas', (req, res) => {
     }
 });
 
+// Metodo con nombre en el url
 router.get('/:nombre', (req, res) => {
     const { nombre } = req.params;
     const empresa = empresaService.getEmpresa(nombre);
@@ -50,5 +68,20 @@ router.get('/:nombre', (req, res) => {
         res.status(400).send({ message: "Empresa no existente" });
     }
 });
+
+/*
+    -- Metodo con nombre en el query params
+
+    router.get('/unicaEmpresa', (req, res) => {
+    const  nombre : any = req.query.nombre;
+    const empresa = empresaService.getEmpresa(nombre);
+    if (empresa) {
+        res.send(empresa);
+    } else {
+        res.status(400).send({ message: "Empresa no existente" });
+    }
+});
+ */
+
 
 export default router;
