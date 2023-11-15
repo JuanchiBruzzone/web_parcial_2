@@ -45,3 +45,11 @@ export const deleteIfNotPersonas = (nombreEmpresa: string): boolean => {
     return false
 }
 
+export const getEmpresa = (nombreEmpresa: string): Empresa | undefined => {
+    const index = empresas.findIndex(empresa => empresa.nombre === nombreEmpresa)
+    if (index === -1) {
+        return undefined
+    }
+    return empresas[index]
+}
+

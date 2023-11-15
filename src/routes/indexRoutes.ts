@@ -6,6 +6,6 @@ import persona from './persona';
 const router = express.Router();
 
 router.use('/empresas', empresa);
-router.use('/personas', empresa);
+router.use('/personas', persona);
 
 export default router;
