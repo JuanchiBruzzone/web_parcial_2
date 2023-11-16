@@ -1,11 +1,14 @@
-export function validacionToken(res: any, req: any, next: any) {
-    let bearer = req.headers.authorization;
-    if(typeof bearer !== 'undefined'){
-        bearer.split(' ')[1];
-        req.token = bearer;
-        next()
-    }
-    else{
-        res.status(401).send({ error: 'token missing or invalid' });
-    }
+import jwt from 'jsonwebtoken';
+
+function validacionToken(req: any, res: any, next: any) {
+        let token: string = req.headers['authorization'].split(' ')[1];
+        try{
+            jwt.verify(token, 'shhhhh');
+            next();
+            return true;
+        }catch(e){
+            res.send({error: 'Token invalido'});
+        }
+        return false;
 }
+export {validacionToken};

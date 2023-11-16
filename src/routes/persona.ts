@@ -1,6 +1,6 @@
 import express from 'express';
 import * as personaService from "../services/personaService";
-import { validacionToken } from "../middleware";
+import  {validacionToken}  from '../middleware';
 
 
 const router = express.Router();

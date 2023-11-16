@@ -1,5 +1,10 @@
 import express from 'express'
 import manejoRutas from './routes/indexRoutes'
+import jwt from 'jsonwebtoken'
+
+
+var validToken = jwt.sign("mynameis", "shhhhh");
+console.log(validToken);
 
 
 const app = express()
@@ -11,6 +16,8 @@ app.get('/test', (req, res) => {
     console.log("hello world");
     res.send('V 1.1')
 })
+
+
 
 app.use('/api', manejoRutas);
 
