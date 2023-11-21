@@ -6,12 +6,12 @@ import { validacionToken } from "../middleware";
 const router = express.Router();
 
 
-router.get('',  (_req, res) => {
+router.get('', validacionToken,  (_req, res) => {
     const empresas = empresaService.getEmpresas();
     res.send(empresas);
 });
 
-router.post('', (req, res) => {
+router.post('', validacionToken, (req, res) => {
     const { nombre, sitioWeb, notasAdicionales } = req.body;
     const result = empresaService.addEmpresa(nombre, sitioWeb, notasAdicionales);
     if (result) {
@@ -21,10 +21,8 @@ router.post('', (req, res) => {
     }
 });
 
-/*
-    -- Metodo con nombre en la url
 
-    router.delete('/:nombre',  (req?, res?) => {
+    router.delete('/:nombre', validacionToken,  (req?, res?) => {
     const { nombre } = req.params;
     const result = empresaService.deleteEmpresa(nombre);
     if (result) {
@@ -33,22 +31,13 @@ router.post('', (req, res) => {
         res.status(400).send({ message: "Empresa no existente" });
     }
 });
- */
-
-// -- Metodo con query params
-router.delete('/borrar',  (req?, res?) => {
-    const nombre : any = req.query.nombre;
-    const result = empresaService.deleteEmpresa(nombre);
-    if (result) {
-        res.send({ message: "Empresa eliminada correctamente" });
-    } else {
-        res.status(400).send({ message: "Empresa no existente" });
-    }
-});
 
 
 
-router.delete('/:nombre/eliminarSiNoTienePersonas', (req, res) => {
+
+
+
+router.delete('/:nombre/eliminarSiNoTienePersonas', validacionToken, (req, res) => {
     const { nombre } = req.params;
     const result = empresaService.deleteIfNotPersonas(nombre);
     if (result) {
@@ -58,8 +47,7 @@ router.delete('/:nombre/eliminarSiNoTienePersonas', (req, res) => {
     }
 });
 
-// Metodo con nombre en el url
-router.get('/:nombre', (req, res) => {
+router.get('/:nombre', validacionToken, (req, res) => {
     const { nombre } = req.params;
     const empresa = empresaService.getEmpresa(nombre);
     if (empresa) {
@@ -68,20 +56,6 @@ router.get('/:nombre', (req, res) => {
         res.status(400).send({ message: "Empresa no existente" });
     }
 });
-
-/*
-    -- Metodo con nombre en el query params
-
-    router.get('/unicaEmpresa', (req, res) => {
-    const  nombre : any = req.query.nombre;
-    const empresa = empresaService.getEmpresa(nombre);
-    if (empresa) {
-        res.send(empresa);
-    } else {
-        res.status(400).send({ message: "Empresa no existente" });
-    }
-});
- */
 
 
 export default router;
