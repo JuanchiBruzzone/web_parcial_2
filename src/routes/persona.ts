@@ -1,16 +1,16 @@
-import express from 'express';
+import express, {NextFunction, Request, Response} from 'express';
 import * as personaService from "../services/personaService";
-import  {validacionToken}  from '../middleware';
+import  {authenticateToken}  from '../middleware';
 
 
 const router = express.Router();
 
-router.get('', validacionToken, (_req, res) => {
+router.get('/', authenticateToken, (_req : Request, res : Response, _next : NextFunction) => {
     const personas = personaService.getPersonas();
     res.send(personas);
 });
 
-router.post('', validacionToken, (req, res) => {
+router.post('/add', authenticateToken, (req : Request, res : Response, _next : NextFunction) => {
     const { nombre, apellido, telefono, email, empresa } = req.body;
     const result = personaService.addPersona(nombre, apellido, telefono, email, empresa);
     if (result) {
@@ -20,7 +20,7 @@ router.post('', validacionToken, (req, res) => {
     }
 });
 
-router.delete('/:nombre', validacionToken, (req, res) => {
+router.delete('/:nombre', authenticateToken, (req : Request, res : Response, _next : NextFunction) => {
     const { nombre } = req.params;
     const result = personaService.deletePersona(nombre);
     if (result) {
@@ -30,7 +30,7 @@ router.delete('/:nombre', validacionToken, (req, res) => {
     }
 });
 
-router.get('/:nombre',validacionToken, (req, res) => {
+router.get('/:nombre',authenticateToken, (req : Request, res : Response, _next : NextFunction) => {
     const { nombre } = req.params;
     const persona = personaService.getPersona(nombre);
     if (persona) {
@@ -40,7 +40,7 @@ router.get('/:nombre',validacionToken, (req, res) => {
     }
 });
 
-router.get('/:apellido',validacionToken, (req, res) => {
+router.get('/:apellido',authenticateToken, (req : Request, res : Response, _next : NextFunction) => {
     const { apellido } = req.params;
     const personas = personaService.getPersonasByApellido(apellido);
     if (personas) {
