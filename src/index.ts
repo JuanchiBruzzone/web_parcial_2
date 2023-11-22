@@ -27,7 +27,7 @@ app.get('/auth/token', (req, res) => {
 app.use('/api', manejoRutas);
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+    console.log(`Server running on port: ${PORT}`)
 })
 
 export {token};
